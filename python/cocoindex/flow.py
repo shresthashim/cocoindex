@@ -1033,7 +1033,7 @@ class TransientFlowWrapper(Flow):
         flow_builder_state = _FlowBuilderState(flow_full_name)
 
         # Add direct inputs for each input value and collect the data slices
-        input_data_slices = {}
+        input_data_slices: dict[str, DataSlice[Any]] = {}
         for key, value in input_values.items():
             encoded_type = encode_enriched_type(type(value))
             if encoded_type is None:
