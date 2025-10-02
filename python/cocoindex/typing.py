@@ -589,7 +589,11 @@ class BasicValueType:
 
     def __str__(self) -> str:
         if self.kind == "Vector" and self.vector is not None:
-            dimension_str = f", {self.vector.dimension}" if self.vector.dimension is not None else ""
+            dimension_str = (
+                f", {self.vector.dimension}"
+                if self.vector.dimension is not None
+                else ""
+            )
             return f"Vector[{self.vector.element_type}{dimension_str}]"
         elif self.kind == "Union" and self.union is not None:
             types_str = " | ".join(str(t) for t in self.union.variants)
@@ -737,7 +741,7 @@ class TableType:
             table_kind = "LTable"
         else:  # UTable
             table_kind = "Table"
-        
+
         return f"{table_kind}({self.row})"
 
     def __repr__(self) -> str:
