@@ -102,7 +102,7 @@ else:
             return Annotated[list[dtype], vector_info]
 
 
-TABLE_TYPES: tuple[str, str, str] = ("UTable", "KTable", "LTable")
+TABLE_TYPES: tuple[str, str] = ("KTable", "LTable")
 KEY_FIELD_NAME: str = "_key"
 
 
@@ -729,7 +729,7 @@ class StructType(StructSchema):
 
 @dataclasses.dataclass
 class TableType:
-    kind: Literal["UTable", "KTable", "LTable"]
+    kind: Literal["KTable", "LTable"]
     row: StructSchema
     num_key_parts: int | None = None  # Only for KTable
 
@@ -737,10 +737,8 @@ class TableType:
         if self.kind == "KTable":
             num_parts = self.num_key_parts if self.num_key_parts is not None else 1
             table_kind = f"KTable({num_parts})"
-        elif self.kind == "LTable":
+        else:  # LTable
             table_kind = "LTable"
-        else:  # UTable
-            table_kind = "Table"
 
         return f"{table_kind}({self.row})"
 
